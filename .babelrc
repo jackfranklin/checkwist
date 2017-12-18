@@ -1,0 +1,4 @@
+{
+  "presets": [["env", { "targets": { "browsers": "last 1 version" }}], "react", "flow"],
+  "plugins": ["transform-object-rest-spread", "transform-class-properties"]
+}

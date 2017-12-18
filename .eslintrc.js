@@ -7,12 +7,13 @@ module.exports = {
   parserOptions: {
     sourceType: 'module',
   },
-  plugins: ['prettier'],
+  plugins: ['prettier', 'flowtype'],
   extends: [
     'unobtrusive',
     'unobtrusive/import',
     'unobtrusive/react',
     'prettier',
+    'plugin:flowtype/recommended',
   ],
   rules: {
     'prettier/prettier': ['error'],
@@ -28,4 +29,4 @@ module.exports = {
     // this bug is a show stopper for us: https://github.com/yannickcr/eslint-plugin-react/issues/1389
     'react/no-typos': 'off',
   },
-};
+}
