@@ -1,0 +1,30 @@
+{
+  "name": "checkwist",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "Jack Franklin",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "firebase": "^4.8.0",
+    "material-ui": "^1.0.0-beta.24",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^4.13.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-unobtrusive": "^1.2.1",
+    "eslint-plugin-prettier": "^2.4.0",
+    "flow-bin": "^0.61.0",
+    "flow-typed": "^2.2.3",
+    "parcel-bundler": "^1.2.1",
+    "prettier": "^1.9.2"
+  }
+}
