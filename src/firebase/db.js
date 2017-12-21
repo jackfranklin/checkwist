@@ -28,8 +28,35 @@ export const writeUserDataIfNewUser = (
   })
 }
 
-export const fetchUserTemplates = (userId, cb) =>
+type Item = {
+  id: string,
+  text: string,
+}
+const getRandomId = () =>
+  Math.random()
+    .toString(36)
+    .substr(2, 5)
+
+export const writeNewChecklistTemplate = (
+  userId: string,
+  name: string,
+  items: Map<string, Item>
+) => {
+  const id = getRandomId()
+  return firebase
+    .database()
+    .ref(`checklistTemplates/${userId}/${id}`)
+    .set({
+      name,
+      items: [...items.values()],
+    })
+}
+
+export const fetchUserTemplates = (
+  userId: string,
+  cb: $npm$firebase$database$DataSnapshot => void
+) =>
   firebase
     .database()
-    .ref(`users/${userId}`)
+    .ref(`checklistTemplates/${userId}`)
     .on('value', cb)

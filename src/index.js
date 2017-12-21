@@ -15,7 +15,9 @@ const config = {
   storageBucket: 'checkwist-dev.appspot.com',
   messagingSenderId: '219076333696',
 }
-firebase.initializeApp(config)
+if (!firebase.apps.length) {
+  firebase.initializeApp(config)
+}
 
 const App = () => (
   <Provider store={store}>

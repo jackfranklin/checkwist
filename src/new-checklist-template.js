@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { writeNewChecklistTemplate } from './firebase/db'
 
 const getRandomId = () =>
   Math.random()
@@ -18,7 +19,7 @@ type Item = {
 }
 
 type State = {
-  name: ?string,
+  name: string,
   items: Map<string, Item>,
 }
 
@@ -126,6 +127,14 @@ const FormItemCheckbox = styled.input.attrs({
   margin-right: 5px;
 `
 
+const SaveButton = styled.button.attrs({ type: 'submit' })`
+  width: 100%;
+  height: 50px;
+  background: #ddd;
+  color: #fff;
+  margin-top: 70px;
+`
+
 const dummyItems: Map<string, Item> = new Map(
   [getRandomId(), getRandomId()].map((id: string, index: number) => [
     id,
@@ -139,7 +148,7 @@ export default class NewChecklistTemplate extends Component<Props, State> {
   onSubmit: (SyntheticInputEvent<HTMLInputElement>) => void
 
   state = {
-    name: '',
+    name: 'jack test',
     items: dummyItems,
   }
 
@@ -214,6 +223,22 @@ export default class NewChecklistTemplate extends Component<Props, State> {
     return lastItem !== undefined && lastItem.text === ''
   }
 
+  onSubmit(e: SyntheticInputEvent<HTMLInputElement>) {
+    e.preventDefault()
+    writeNewChecklistTemplate(
+      this.props.user.uid,
+      this.state.name,
+      this.state.items
+    )
+      .then(x => {
+        console.log('success', x)
+        this.props.history.push(`/`)
+      })
+      .catch(e => {
+        console.log('error', e)
+      })
+  }
+
   render() {
     const itemIds = [...this.state.items.keys()]
     return (
@@ -240,6 +265,7 @@ export default class NewChecklistTemplate extends Component<Props, State> {
             +
           </AddNewFormItem>
         </FormGroup>
+        <SaveButton>Save</SaveButton>
       </form>
     )
   }

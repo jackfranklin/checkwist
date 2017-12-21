@@ -25,7 +25,9 @@ class Checkwist extends Component<Props, State> {
   componentDidMount() {
     getAuthState(user => {
       this.setState({ user })
-      writeUserDataIfNewUser(user.uid, user.displayName, user.photoURL)
+      if (user) {
+        writeUserDataIfNewUser(user.uid, user.displayName, user.photoURL)
+      }
     })
   }
 
