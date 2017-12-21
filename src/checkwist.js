@@ -1,10 +1,21 @@
 // @flow
-import React, { Component } from 'react'
-import { getAuthState, signUserIn, isLoggedInAnd } from './firebase/auth'
-import { writeUserData } from './firebase/db'
+import React, { Component, Fragment } from 'react'
+import { getAuthState } from './firebase/auth'
+import { writeUserDataIfNewUser } from './firebase/db'
+import Header from './header'
+import { injectGlobal } from 'styled-components'
+import normaliseCss from 'normalize.css/normalize.css'
+import ChecklistTemplates from './checklist-templates'
+import { BrowserRouter, Route } from 'react-router-dom'
+import NewChecklistTemplate from './new-checklist-template'
 
 type Props = {}
 type State = { user: ?$npm$firebase$auth$User }
+
+injectGlobal`
+  ${normaliseCss}
+  * { font-family: 'Slabo 27px', serif; box-sizing: border-box; }
+`
 
 class Checkwist extends Component<Props, State> {
   state = {
@@ -14,29 +25,31 @@ class Checkwist extends Component<Props, State> {
   componentDidMount() {
     getAuthState(user => {
       this.setState({ user })
-    })
-  }
-
-  login = () => {
-    getAuthState(user => {
-      if (!user) {
-        signUserIn().then(() =>
-          isLoggedInAnd(user => {
-            this.setState({ user })
-            writeUserData(user.uid, user.displayName, user.photoURL)
-          })
-        )
-      }
+      writeUserDataIfNewUser(user.uid, user.displayName, user.photoURL)
     })
   }
 
   render() {
-    return this.state.user ? (
-      <p>you are logged in!</p>
-    ) : (
-      <div>
-        <button onClick={this.login}>Click here to login</button>
-      </div>
+    const { user } = this.state
+    return (
+      <BrowserRouter>
+        <Fragment>
+          <Header user={user} />
+          {user && (
+            <Fragment>
+              <Route
+                path="/"
+                exact
+                render={() => <ChecklistTemplates user={user} />}
+              />
+              <Route
+                path="/templates/new"
+                render={() => <NewChecklistTemplate user={user} />}
+              />
+            </Fragment>
+          )}
+        </Fragment>
+      </BrowserRouter>
     )
   }
 }

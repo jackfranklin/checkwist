@@ -1,6 +1,8 @@
 // @flow
 import firebase from 'firebase'
 
+export const signUserOut = () => firebase.auth().signOut()
+
 export const getAuthState = (cb: (?$npm$firebase$auth$User) => void): void => {
   firebase.auth().onAuthStateChanged(cb)
 }
