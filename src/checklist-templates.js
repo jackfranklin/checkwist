@@ -2,29 +2,15 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { fetchUserTemplates } from './firebase/db'
 import { Link } from 'react-router-dom'
+import { getUserTemplatesMap } from './firebase/templates'
+import type { ChecklistTemplate } from './firebase/templates'
 
 type Props = {
   user: $npm$firebase$auth$User,
 }
-type Template = {
-  items: Item[],
-  name: string,
-}
-
-type Item = {
-  id: string,
-  text: string,
-}
-
 type State = {
-  templates: Map<string, Template>,
-}
-
-function entries<T>(obj: { [string]: T }): Array<[string, T]> {
-  const keys: string[] = Object.keys(obj)
-  return keys.map(key => [key, obj[key]])
+  templates: Map<string, ChecklistTemplate>,
 }
 
 const NewTemplateBtn = styled(Link)`
@@ -53,7 +39,7 @@ const TemplatesList = styled.ul`
   list-style: none;
 `
 
-const TemplateItem = styled.li`
+const TemplateListItem = styled.li`
   padding: 10px;
   width: 100%;
   border-bottom: 1px solid #ccc;
@@ -85,26 +71,20 @@ export default class ChecklistTemplates extends Component<Props, State> {
   }
 
   componentDidMount() {
-    fetchUserTemplates(this.props.user.uid, snapshot => {
-      const snapshotValue: { [id: string]: Template } = snapshot.val()
-
-      if (snapshot.val()) {
-        const templates = new Map(entries(snapshotValue))
-        this.setState({ templates })
-      }
+    getUserTemplatesMap(this.props.user.uid, templates => {
+      this.setState({ templates })
     })
   }
 
   renderTemplate(templateId: string) {
     const template = this.state.templates.get(templateId)
     if (!template) return null
-    console.log('got template', template)
     return (
-      <TemplateItem key={templateId}>
+      <TemplateListItem key={templateId}>
         <TemplateName>{template.name}</TemplateName>
         <TemplateLink to={`/templates/${templateId}`}>Edit</TemplateLink>
         <TemplateLink to={`/new-from-template/${templateId}`}>Use</TemplateLink>
-      </TemplateItem>
+      </TemplateListItem>
     )
   }
 

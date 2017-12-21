@@ -51,12 +51,3 @@ export const writeNewChecklistTemplate = (
       items: [...items.values()],
     })
 }
-
-export const fetchUserTemplates = (
-  userId: string,
-  cb: $npm$firebase$database$DataSnapshot => void
-) =>
-  firebase
-    .database()
-    .ref(`checklistTemplates/${userId}`)
-    .on('value', cb)

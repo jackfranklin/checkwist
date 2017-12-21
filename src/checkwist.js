@@ -42,11 +42,13 @@ class Checkwist extends Component<Props, State> {
               <Route
                 path="/"
                 exact
-                render={() => <ChecklistTemplates user={user} />}
+                render={props => <ChecklistTemplates {...props} user={user} />}
               />
               <Route
                 path="/templates/new"
-                render={() => <NewChecklistTemplate user={user} />}
+                render={props => (
+                  <NewChecklistTemplate {...props} user={user} />
+                )}
               />
             </Fragment>
           )}
