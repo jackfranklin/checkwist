@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { writeNewChecklistTemplate } from './firebase/db'
+import { fetchUserTemplate } from './firebase/templates'
 import type { RouterHistory } from 'react-router-dom'
 import {
   newChecklist,
@@ -13,13 +14,22 @@ import {
   removeEmptyItems,
 } from './checklist-template-creator'
 import type { ChecklistTemplateForm } from './checklist-template-creator'
+import spinnerSvg from './spinner.svg'
+
+// parceljs bug I think
+const spinnerPath =
+  process.env.NODE_ENV === 'development' ? `/dist${spinnerSvg}` : spinnerSvg
 
 type Props = {
   user: $npm$firebase$auth$User,
+  checkListId?: string,
   history: RouterHistory,
 }
 
-type State = ChecklistTemplateForm
+type State = {
+  form: ChecklistTemplateForm,
+  isLoading: boolean,
+}
 
 const FormGroup = styled.div`
   padding: 10px;
@@ -141,22 +151,56 @@ const SaveButton = styled.button.attrs({ type: 'submit' })`
   }
 `
 
+const Spinner = styled.img.attrs({
+  src: spinnerPath,
+})`
+  display: block;
+  margin: 20px auto;
+`
+
 export default class NewChecklistTemplate extends Component<Props, State> {
   // TODO: figure out what this type is
   itemsDom: any
 
-  state: State = newChecklist()
+  state: State = { form: newChecklist(), isLoading: true }
 
+  componentDidMount() {
+    if (this.props.checkListId) {
+      fetchUserTemplate(
+        this.props.user.uid,
+        this.props.checkListId,
+        snapshot => {
+          const checklist = snapshot.val()
+          if (checklist) {
+            const itemsMap = new Map(
+              checklist.items.map(item => [item.id, item])
+            )
+            this.setState({
+              form: {
+                name: checklist.name,
+                items: itemsMap,
+              },
+              isLoading: false,
+            })
+          }
+        }
+      )
+    } else {
+      this.setState({ isLoading: false })
+    }
+  }
   onNameChange = (e: SyntheticInputEvent<HTMLInputElement>) =>
-    this.setState({ name: e.target.value })
+    this.setState(({ form }) => ({
+      form: { ...form, name: e.target.value },
+    }))
 
   updateItem(itemId: string, value: string) {
-    this.setState(updateItemText(this.state, itemId, value))
+    this.setState({ form: updateItemText(this.state.form, itemId, value) })
   }
 
   removeItem(itemId: string, e: SyntheticInputEvent<HTMLInputElement>) {
     e.preventDefault()
-    this.setState(removeItem(this.state, itemId))
+    this.setState({ form: removeItem(this.state.form, itemId) })
   }
 
   addNewItemBelowIndex(
@@ -164,27 +208,30 @@ export default class NewChecklistTemplate extends Component<Props, State> {
     e: SyntheticInputEvent<HTMLInputElement>
   ) {
     e.preventDefault()
-    this.setState(addNewItemBelowIndex(this.state, index), () => {
-      // TODO: find a better way to get at the input within the new item
-      const newestInput = this.itemsDom.childNodes[index + 1].childNodes[1]
-      newestInput && newestInput.focus()
-    })
+    this.setState(
+      { form: addNewItemBelowIndex(this.state.form, index) },
+      () => {
+        // TODO: find a better way to get at the input within the new item
+        const newestInput = this.itemsDom.childNodes[index + 1].childNodes[1]
+        newestInput && newestInput.focus()
+      }
+    )
   }
 
   addNewItem = (e: SyntheticInputEvent<HTMLInputElement>): void => {
     e.preventDefault()
-    this.setState(addNewItem(this.state))
+    this.setState({ form: addNewItem(this.state.form) })
   }
 
   addButtonDisabled() {
-    const itemValues = [...this.state.items.values()]
+    const itemValues = [...this.state.form.items.values()]
     const lastItem = itemValues[itemValues.length - 1]
     return lastItem !== undefined && lastItem.text === ''
   }
 
   onSubmit = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.preventDefault()
-    const withEmptyRemoved = removeEmptyItems(this.state)
+    const withEmptyRemoved = removeEmptyItems(this.state.form)
 
     writeNewChecklistTemplate(
       this.props.user.uid,
@@ -202,7 +249,7 @@ export default class NewChecklistTemplate extends Component<Props, State> {
   }
 
   renderItem(itemId: string, index: number) {
-    const item = this.state.items.get(itemId)
+    const item = this.state.form.items.get(itemId)
     if (!item) return null
     return (
       <FormItem key={item.id}>
@@ -222,14 +269,18 @@ export default class NewChecklistTemplate extends Component<Props, State> {
   }
 
   render() {
-    const itemIds = [...this.state.items.keys()]
-    return (
+    const { isLoading, form } = this.state
+    const itemIds = [...form.items.keys()]
+    console.log('got spinner', spinnerSvg)
+    return isLoading || true ? (
+      <Spinner />
+    ) : (
       <form onSubmit={this.onSubmit}>
         <FormNameGroup>
           <FormLabel>Checklist name</FormLabel>
           <FormTextInput
             type="text"
-            value={this.state.name}
+            value={this.state.form.name}
             onChange={this.onNameChange}
             placeholder="Packing for Christmas"
           />

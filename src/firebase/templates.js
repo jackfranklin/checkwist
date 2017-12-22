@@ -31,6 +31,16 @@ const fetchUserTemplates = (
     .ref(`checklistTemplates/${userId}`)
     .on('value', cb)
 
+export const fetchUserTemplate = (
+  userId: string,
+  templateId: string,
+  cb: $npm$firebase$database$DataSnapshot => void
+) =>
+  firebase
+    .database()
+    .ref(`checklistTemplates/${userId}/${templateId}`)
+    .once('value', cb)
+
 export const getUserTemplatesMap = (
   userId: string,
   cb: (Map<string, ChecklistTemplate>) => void

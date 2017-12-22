@@ -8,6 +8,7 @@ import normaliseCss from 'normalize.css/normalize.css'
 import ChecklistTemplates from './checklist-templates'
 import { BrowserRouter, Route } from 'react-router-dom'
 import NewChecklistTemplate from './new-checklist-template'
+import ChecklistTemplateForm from './checklist-template-form'
 
 type Props = {}
 type State = { user: ?$npm$firebase$auth$User }
@@ -48,6 +49,16 @@ class Checkwist extends Component<Props, State> {
                 path="/templates/new"
                 render={props => (
                   <NewChecklistTemplate {...props} user={user} />
+                )}
+              />
+              <Route
+                path="/templates/:templateId"
+                render={props => (
+                  <ChecklistTemplateForm
+                    {...props}
+                    user={user}
+                    checkListId={props.match.params.templateId}
+                  />
                 )}
               />
             </Fragment>
