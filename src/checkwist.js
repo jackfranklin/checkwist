@@ -6,8 +6,9 @@ import Header from './header'
 import { injectGlobal } from 'styled-components'
 import normaliseCss from 'normalize.css/normalize.css'
 import ChecklistTemplates from './checklist-templates'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 import ChecklistTemplateForm from './checklist-template-form'
+import NewFromTemplate from './new-from-template'
 
 type Props = {}
 type State = { user: ?$npm$firebase$auth$User }
@@ -51,14 +52,37 @@ class Checkwist extends Component<Props, State> {
                 )}
               />
               <Route
+                path="/new-from-template/:templateId"
+                render={props => {
+                  const templateId: string =
+                    (props.match.params && props.match.params.templateId) || ''
+
+                  if (templateId === '') return <Redirect to="/" />
+                  return (
+                    <NewFromTemplate
+                      {...props}
+                      user={user}
+                      checklistId={templateId}
+                    />
+                  )
+                }}
+              />
+              <Route
                 path="/templates/:templateId"
-                render={props => (
-                  <ChecklistTemplateForm
-                    {...props}
-                    user={user}
-                    checkListId={props.match.params.templateId}
-                  />
-                )}
+                render={props => {
+                  const templateId: string =
+                    (props.match.params && props.match.params.templateId) || ''
+
+                  if (templateId === '') return <Redirect to="/" />
+
+                  return (
+                    <ChecklistTemplateForm
+                      {...props}
+                      user={user}
+                      checklistId={templateId}
+                    />
+                  )
+                }}
               />
             </Fragment>
           )}

@@ -17,11 +17,7 @@ import {
   removeEmptyItems,
 } from './checklist-template-creator'
 import type { ChecklistTemplateForm } from './checklist-template-creator'
-import spinnerSvg from './spinner.svg'
-
-// parceljs bug I think
-const spinnerPath =
-  process.env.NODE_ENV === 'development' ? `/dist${spinnerSvg}` : spinnerSvg
+import Spinner from './spinner'
 
 type Props = {
   user: $npm$firebase$auth$User,
@@ -152,13 +148,6 @@ const SaveButton = styled.button.attrs({ type: 'submit' })`
     cursor: default;
     opacity: 0.5;
   }
-`
-
-const Spinner = styled.img.attrs({
-  src: spinnerPath,
-})`
-  display: block;
-  margin: 20px auto;
 `
 
 export default class NewChecklistTemplate extends Component<Props, State> {

@@ -1,16 +1,18 @@
 // @flow
 
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { getUserTemplatesMap } from './firebase/templates'
 import type { ChecklistTemplate } from './firebase/templates'
+import Spinner from './spinner'
 
 type Props = {
   user: $npm$firebase$auth$User,
 }
 type State = {
   templates: Map<string, ChecklistTemplate>,
+  isLoading: boolean,
 }
 
 const NewTemplateBtn = styled(Link)`
@@ -25,7 +27,7 @@ const NewTemplateBtn = styled(Link)`
   background: #ddd;
   &:link,
   &:visited {
-    color: #fff;
+    color: #111;
     text-decoration: none;
   }
   &:hover {
@@ -58,6 +60,14 @@ const TemplateLink = styled(Link)`
   display: block;
   background: #eee;
   border-radius: 3px;
+  &:link,
+  &:visited {
+    color: #111;
+    text-decoration: none;
+  }
+  &:hover {
+    background: #ddd;
+  }
 `
 
 const TemplateName = styled.h5`
@@ -68,11 +78,12 @@ const TemplateName = styled.h5`
 export default class ChecklistTemplates extends Component<Props, State> {
   state: State = {
     templates: new Map(),
+    isLoading: true,
   }
 
   componentDidMount() {
     getUserTemplatesMap(this.props.user.uid, templates => {
-      this.setState({ templates })
+      this.setState({ templates, isLoading: false })
     })
   }
 
@@ -91,15 +102,17 @@ export default class ChecklistTemplates extends Component<Props, State> {
   render() {
     const templateIds = [...this.state.templates.keys()]
 
-    return (
-      <div>
+    return this.state.isLoading ? (
+      <Spinner />
+    ) : (
+      <Fragment>
         <TemplatesList>
           {templateIds.map(templateId => this.renderTemplate(templateId))}
         </TemplatesList>
         <NewTemplateBtn to="/templates/new">
           Create a new template
         </NewTemplateBtn>
-      </div>
+      </Fragment>
     )
   }
 }

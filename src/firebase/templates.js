@@ -2,6 +2,7 @@
 
 import firebase from 'firebase'
 import { getRandomId } from '../get-random-id'
+import type { ChecklistFirebaseInstance } from './instances'
 
 export type TemplateItem = {
   id: string,
@@ -85,4 +86,40 @@ export const updateChecklistTemplate = (
       name,
       items: [...items.values()],
     })
+}
+
+// export type ChecklistInstance = {
+//   templateId: string,
+//   createdAt: Date,
+//   items: [{
+//     id: string,
+//     text: string,
+//     done: boolean,
+//   },
+//   name: string,
+// }
+
+export const cloneTemplateToInstance = (
+  userId: string,
+  checklistTemplateId: string,
+  cb: string => void
+) => {
+  fetchUserTemplate(userId, checklistTemplateId, snapshot => {
+    const checklist = snapshot.val()
+    if (checklist) {
+      const newInstance: ChecklistFirebaseInstance = {
+        instanceId: getRandomId(),
+        templateId: checklistTemplateId,
+        createdAt: new Date(),
+        items: checklist.items.map(item => ({ ...item, done: false })),
+        name: checklist.name,
+      }
+      console.log('got checklist', checklist)
+      firebase
+        .database()
+        .ref(`checklistInstances/${userId}/${newInstance.instanceId}`)
+        .set(newInstance)
+        .then(() => cb(newInstance.instanceId))
+    }
+  })
 }
