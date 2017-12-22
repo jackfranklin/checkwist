@@ -26,7 +26,7 @@ class NewFromTemplate extends Component<Props, State> {
 
   render() {
     return this.state.instanceId ? (
-      <Redirect to={`/instance/${this.state.instanceId}`} />
+      <Redirect to={`/instances/${this.state.instanceId}`} />
     ) : null
   }
 }

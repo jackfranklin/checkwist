@@ -84,6 +84,17 @@ class Checkwist extends Component<Props, State> {
                   )
                 }}
               />
+              <Route
+                path="/instances/:instanceId"
+                render={props => {
+                  const instanceId: string =
+                    (props.match.params && props.match.params.instanceId) || ''
+
+                  if (instanceId === '') return <Redirect to="/" />
+
+                  return <p>{instanceId}</p>
+                }}
+              />
             </Fragment>
           )}
         </Fragment>
