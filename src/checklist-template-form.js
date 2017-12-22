@@ -2,8 +2,11 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { writeNewChecklistTemplate } from './firebase/db'
-import { fetchUserTemplate } from './firebase/templates'
+import {
+  fetchUserTemplate,
+  writeNewChecklistTemplate,
+  updateChecklistTemplate,
+} from './firebase/templates'
 import type { RouterHistory } from 'react-router-dom'
 import {
   newChecklist,
@@ -22,7 +25,7 @@ const spinnerPath =
 
 type Props = {
   user: $npm$firebase$auth$User,
-  checkListId?: string,
+  checklistId?: string,
   history: RouterHistory,
 }
 
@@ -165,10 +168,10 @@ export default class NewChecklistTemplate extends Component<Props, State> {
   state: State = { form: newChecklist(), isLoading: true }
 
   componentDidMount() {
-    if (this.props.checkListId) {
+    if (this.props.checklistId) {
       fetchUserTemplate(
         this.props.user.uid,
-        this.props.checkListId,
+        this.props.checklistId,
         snapshot => {
           const checklist = snapshot.val()
           if (checklist) {
@@ -233,19 +236,34 @@ export default class NewChecklistTemplate extends Component<Props, State> {
     e.preventDefault()
     const withEmptyRemoved = removeEmptyItems(this.state.form)
 
-    writeNewChecklistTemplate(
-      this.props.user.uid,
-      withEmptyRemoved.name,
-      withEmptyRemoved.items
-    )
-      .then(x => {
-        console.log('got here', this.props)
-        console.log('success', x)
-        this.props.history.push(`/`)
-      })
-      .catch(e => {
-        console.log('error', e)
-      })
+    if (this.props.checklistId) {
+      updateChecklistTemplate(
+        this.props.user.uid,
+        this.props.checklistId,
+        withEmptyRemoved.name,
+        withEmptyRemoved.items
+      )
+        .then(() => {
+          console.log('success updating template')
+          this.props.history.push(`/`)
+        })
+        .catch(e => {
+          console.log('error updating template', e)
+        })
+    } else {
+      writeNewChecklistTemplate(
+        this.props.user.uid,
+        withEmptyRemoved.name,
+        withEmptyRemoved.items
+      )
+        .then(() => {
+          console.log('success writing new template')
+          this.props.history.push(`/`)
+        })
+        .catch(e => {
+          console.log('error writing new template', e)
+        })
+    }
   }
 
   renderItem(itemId: string, index: number) {
@@ -271,8 +289,7 @@ export default class NewChecklistTemplate extends Component<Props, State> {
   render() {
     const { isLoading, form } = this.state
     const itemIds = [...form.items.keys()]
-    console.log('got spinner', spinnerSvg)
-    return isLoading || true ? (
+    return isLoading ? (
       <Spinner />
     ) : (
       <form onSubmit={this.onSubmit}>

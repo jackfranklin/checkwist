@@ -7,7 +7,6 @@ import { injectGlobal } from 'styled-components'
 import normaliseCss from 'normalize.css/normalize.css'
 import ChecklistTemplates from './checklist-templates'
 import { BrowserRouter, Route } from 'react-router-dom'
-import NewChecklistTemplate from './new-checklist-template'
 import ChecklistTemplateForm from './checklist-template-form'
 
 type Props = {}
@@ -48,7 +47,7 @@ class Checkwist extends Component<Props, State> {
               <Route
                 path="/templates/new"
                 render={props => (
-                  <NewChecklistTemplate {...props} user={user} />
+                  <ChecklistTemplateForm {...props} user={user} />
                 )}
               />
               <Route

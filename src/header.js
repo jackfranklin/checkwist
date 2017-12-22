@@ -44,7 +44,7 @@ const AuthButton = styled.a`
 `
 
 export default class Header extends Component<Props, null> {
-  changeAuth = e => {
+  changeAuth = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.preventDefault()
     this.props.user ? signUserOut() : signUserIn()
   }
