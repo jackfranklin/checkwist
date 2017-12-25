@@ -88,20 +88,10 @@ export const updateChecklistTemplate = (
     })
 }
 
-// export type ChecklistInstance = {
-//   templateId: string,
-//   createdAt: Date,
-//   items: [{
-//     id: string,
-//     text: string,
-//     done: boolean,
-//   },
-//   name: string,
-// }
-
 export const cloneTemplateToInstance = (
   userId: string,
   checklistTemplateId: string,
+  newName: string,
   cb: string => void
 ) => {
   fetchUserTemplate(userId, checklistTemplateId, snapshot => {
@@ -110,11 +100,10 @@ export const cloneTemplateToInstance = (
       const newInstance: ChecklistFirebaseInstance = {
         instanceId: getRandomId(),
         templateId: checklistTemplateId,
-        createdAt: new Date(),
+        createdAt: Date.now(),
         items: checklist.items.map(item => ({ ...item, done: false })),
-        name: checklist.name,
+        name: newName,
       }
-      console.log('got checklist', checklist)
       firebase
         .database()
         .ref(`checklistInstances/${userId}/${newInstance.instanceId}`)

@@ -1,6 +1,8 @@
 // @flow
 
-type InstanceItem = {
+import firebase from 'firebase'
+
+export type InstanceItem = {
   id: string,
   text: string,
   done: boolean,
@@ -8,7 +10,7 @@ type InstanceItem = {
 export type ChecklistInstance = {
   instanceId: string,
   templateId: string,
-  createdAt: Date,
+  createdAt: number,
   items: Map<string, InstanceItem>,
   name: string,
 }
@@ -16,7 +18,17 @@ export type ChecklistInstance = {
 export type ChecklistFirebaseInstance = {
   instanceId: string,
   templateId: string,
-  createdAt: Date,
+  createdAt: number,
   items: Array<InstanceItem>,
   name: string,
 }
+
+export const fetchUserInstance = (
+  userId: string,
+  instanceId: string,
+  cb: $npm$firebase$database$DataSnapshot => void
+) =>
+  firebase
+    .database()
+    .ref(`checklistInstances/${userId}/${instanceId}`)
+    .on('value', cb)

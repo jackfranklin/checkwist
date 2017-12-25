@@ -9,6 +9,7 @@ import ChecklistTemplates from './checklist-templates'
 import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 import ChecklistTemplateForm from './checklist-template-form'
 import NewFromTemplate from './new-from-template'
+import ChecklistInstanceForm from './checklist-instance-form'
 
 type Props = {}
 type State = { user: ?$npm$firebase$auth$User }
@@ -92,7 +93,13 @@ class Checkwist extends Component<Props, State> {
 
                   if (instanceId === '') return <Redirect to="/" />
 
-                  return <p>{instanceId}</p>
+                  return (
+                    <ChecklistInstanceForm
+                      {...props}
+                      user={user}
+                      instanceId={instanceId}
+                    />
+                  )
                 }}
               />
             </Fragment>
