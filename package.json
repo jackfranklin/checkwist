@@ -10,24 +10,16 @@
     "build-prod": "NODE_ENV=production parcel build --public-url '/' index.html",
     "lint": "eslint src/ && flow check",
     "lint-and-build": "yarn run lint && yarn run build-prod"
-
   },
   "dependencies": {
-    "date-fns": "^1.29.0",
-    "firebase": "^4.8.0",
-    "normalize.css": "^7.0.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-redux": "^5.0.6",
-    "react-router-dom": "^4.2.2",
-    "redux": "^3.7.2",
-    "styled-components": "^2.3.0",
     "babel-eslint": "^8.0.3",
+    "babel-plugin-styled-components": "^1.4.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
+    "date-fns": "^1.29.0",
     "eslint": "^4.13.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-unobtrusive": "^1.2.1",
@@ -35,9 +27,17 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-prettier": "^2.4.0",
     "eslint-plugin-react": "^7.5.1",
+    "firebase": "^4.8.0",
     "flow-bin": "^0.61.0",
     "flow-typed": "^2.2.3",
+    "normalize.css": "^7.0.0",
     "parcel-bundler": "^1.3.0",
-    "prettier": "^1.9.2"
+    "prettier": "^1.9.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "styled-components": "^2.3.0"
   }
 }

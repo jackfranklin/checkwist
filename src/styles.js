@@ -20,6 +20,7 @@ export const Container = styled.div`
   @media (min-width: 801px) {
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
   }
 `
 
