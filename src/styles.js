@@ -9,7 +9,7 @@ export const blue = (opacity: ?number = DEFAULT_OPACITY) =>
 export const green = (opacity: ?number = DEFAULT_OPACITY) =>
   css`rgba(118, 165, 48, ${opacity})`
 export const yellow = (opacity: ?number = DEFAULT_OPACITY) =>
-  css`rgba(208, 186, 50, ${opacity})`
+  css`rgba(255, 224, 35, ${opacity})`
 export const orange = (opacity: ?number = DEFAULT_OPACITY) =>
   css`rgba(225, 131, 53, ${opacity})`
 
