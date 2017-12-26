@@ -5,7 +5,7 @@ import store from './store'
 import React from 'react'
 import { render } from 'react-dom'
 import Checkwist from './checkwist'
-import firebase from 'firebase'
+import firebase from './firebase/config'
 import { FIREBASE_DEV, FIREBASE_PROD } from './firebase/config'
 
 const config =

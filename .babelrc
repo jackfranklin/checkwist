@@ -1,6 +1,20 @@
 {
   "presets": [
-    ["env", { "modules": false, "targets": { "browsers": "last 1 version" } }],
+    [
+      "env",
+      {
+        "modules": false,
+        "targets": { "browsers": ["last 1 version", "not IE 11"] },
+        "exclude": [
+          "transform-exponentiation-operator",
+          "transform-async-to-generator",
+          "transform-regenerator",
+          "syntax-trailing-function-commas",
+          "transform-es2015-unicode-regex",
+          "transform-es2015-typeof-symbol"
+        ]
+      }
+    ],
     "react",
     "flow"
   ],

@@ -1,4 +1,6 @@
 // @flow
+import firebase from 'firebase'
+
 export const FIREBASE_DEV = {
   apiKey: 'AIzaSyCvSLfAPLQzoLG6BMXQSLcFfwuTrf10TGk',
   authDomain: 'checkwist-dev.firebaseapp.com',
@@ -16,3 +18,5 @@ export const FIREBASE_PROD = {
   storageBucket: 'checkwist.appspot.com',
   messagingSenderId: '415015667465',
 }
+
+export default firebase

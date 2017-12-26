@@ -1,5 +1,5 @@
 // @flow
-import firebase from 'firebase'
+import firebase from './config'
 
 export const signUserOut = () => firebase.auth().signOut()
 
