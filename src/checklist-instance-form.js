@@ -4,7 +4,7 @@ import { fetchUserInstance } from './firebase/instances'
 import type { InstanceItem, ChecklistInstance } from './firebase/instances'
 import Spinner from './spinner'
 import styled from 'styled-components'
-import { distanceInWords } from 'date-fns'
+import distanceInWords from 'date-fns/distance_in_words'
 
 type Props = {
   instanceId: string,

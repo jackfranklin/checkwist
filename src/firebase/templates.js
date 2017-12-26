@@ -1,6 +1,6 @@
 // @flow
 
-import firebase from 'firebase'
+import firebase from './config'
 import { getRandomId } from '../get-random-id'
 import type { ChecklistFirebaseInstance } from './instances'
 

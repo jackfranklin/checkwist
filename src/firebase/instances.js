@@ -1,6 +1,6 @@
 // @flow
 
-import firebase from 'firebase'
+import firebase from './config'
 
 export type InstanceItem = {
   id: string,
