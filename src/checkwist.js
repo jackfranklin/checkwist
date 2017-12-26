@@ -10,7 +10,7 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 import ChecklistTemplateForm from './checklist-template-form'
 import NewFromTemplate from './new-from-template'
 import ChecklistInstanceForm from './checklist-instance-form'
-import { Container, yellow } from './styles'
+import { Container, yellow, blue } from './styles'
 import styled from 'styled-components'
 
 type Props = {}
@@ -21,6 +21,23 @@ injectGlobal`
   * { font-family: 'Slabo 27px', serif; box-sizing: border-box; }
 `
 
+const Footer = styled.footer`
+  text-align: center;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  > p {
+    font-size: 15px;
+    line-height: 25px;
+  }
+
+  a:link,
+  a:visited {
+    color: ${blue(1)};
+  }
+  a:hover {
+    color: #111;
+  }
+`
 type UserRouteProps = { user: $npm$firebase$auth$User }
 
 const UserRoutes = ({ user }: UserRouteProps) => (
@@ -149,6 +166,13 @@ class Checkwist extends Component<Props, State> {
               </p>
             </LoggedOutHero>
           )}
+          <Footer>
+            <p>
+              Checkwist by{' '}
+              <a href="https://twitter.com/Jack_Franklin">Jack Franklin</a>.<br />
+              Checklist logo by Rajive from the Noun Project.
+            </p>
+          </Footer>
         </Container>
       </BrowserRouter>
     )
