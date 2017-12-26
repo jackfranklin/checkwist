@@ -8,6 +8,7 @@ const PROD = process.env.NODE_ENV === 'production'
 
 module.exports = {
   entry: './src/index.js',
+
   output: {
     publicPath: '/',
     filename: 'index.[chunkhash:8].js',
@@ -52,6 +53,9 @@ module.exports = {
         comments: false,
       }),
   ].filter(Boolean),
+  resolve: {
+    mainFields: ['module', 'browser', 'main'],
+  },
   module: {
     rules: [
       {
