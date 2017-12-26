@@ -8,7 +8,9 @@
   "scripts": {
     "build-dev": "NODE_ENV=development parcel index.html",
     "build-prod": "NODE_ENV=production parcel build --public-url '/' index.html",
-    "lint": "yarn run eslint src/ && flow check"
+    "lint": "yarn run eslint src/ && flow check",
+    "lint-and-build": "npm run lint && npm run build-prod"
+
   },
   "dependencies": {
     "date-fns": "^1.29.0",
