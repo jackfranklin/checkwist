@@ -13,6 +13,9 @@ module.exports = {
     filename: 'index.[chunkhash:8].js',
     path: path.resolve(process.cwd(), 'dist'),
   },
+  devServer: {
+    historyApiFallback: true,
+  },
   plugins: [
     new CopyWebpackPlugin([
       {

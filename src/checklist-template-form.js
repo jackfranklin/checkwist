@@ -82,7 +82,7 @@ const FormItem = styled.li`
 `
 
 const FormItemInput = FormTextInput.extend`
-  width: 87%;
+  width: 80%;
 `
 
 const AddNewFormItem = styled.button.attrs({ type: 'button' })`
@@ -119,14 +119,6 @@ const RemoveFormItem = styled.button.attrs({ type: 'button' })`
   font-size: 20px;
   font-weight: bold;
   ${stylesForButtonWithColour(red)};
-`
-
-const FormItemCheckbox = styled.input.attrs({
-  type: 'checkbox',
-  checked: true,
-  disabled: true,
-})`
-  margin-right: 5px;
 `
 
 const SaveButton = styled.button.attrs({ type: 'submit' })`
@@ -174,10 +166,12 @@ export default class NewChecklistTemplate extends Component<Props, State> {
       this.setState({ isLoading: false, form: addNewItem(this.state.form) })
     }
   }
-  onNameChange = (e: SyntheticInputEvent<HTMLInputElement>) =>
+  onNameChange = (e: SyntheticInputEvent<HTMLInputElement>) => {
+    const newName = e.target.value
     this.setState(({ form }) => ({
-      form: { ...form, name: e.target.value },
+      form: { ...form, name: newName },
     }))
+  }
 
   updateItem(itemId: string, value: string) {
     this.setState({ form: updateItemText(this.state.form, itemId, value) })
@@ -217,6 +211,9 @@ export default class NewChecklistTemplate extends Component<Props, State> {
   onSubmit = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.preventDefault()
     const withEmptyRemoved = removeEmptyItems(this.state.form)
+    if (!withEmptyRemoved.name || withEmptyRemoved.items.length === 0) {
+      return
+    }
 
     if (this.props.checklistId) {
       updateChecklistTemplate(

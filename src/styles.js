@@ -59,3 +59,7 @@ export const SubmitButton = styled.button.attrs({
     background: ${green(1)};
   }
 `
+
+export const EmptyList = styled.p`
+  text-align: center;
+`

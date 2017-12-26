@@ -7,7 +7,13 @@ import { getUserTemplatesMap, removeUserTemplate } from './firebase/templates'
 import type { ChecklistTemplate } from './firebase/templates'
 import Spinner from './spinner'
 
-import { red, green, blue, stylesForButtonWithColour } from './styles'
+import {
+  EmptyList,
+  red,
+  green,
+  blue,
+  stylesForButtonWithColour,
+} from './styles'
 
 type Props = {
   user: $npm$firebase$auth$User,
@@ -135,6 +141,9 @@ export default class ChecklistTemplates extends Component<Props, State> {
       <Fragment>
         <TemplatesList>
           {templateIds.map(templateId => this.renderTemplate(templateId))}
+          {templateIds.length === 0 && (
+            <EmptyList>You haven&rsquo;t created any templates yet.</EmptyList>
+          )}
         </TemplatesList>
         <NewTemplateBtn to="/templates/new">
           Create a new template
