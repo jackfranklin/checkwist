@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const PROD = process.env.NODE_ENV === 'production'
 
@@ -13,6 +14,12 @@ module.exports = {
     path: path.resolve(process.cwd(), 'dist'),
   },
   plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(process.cwd(), 'logo.png'),
+        to: 'logo.png',
+      },
+    ]),
     new HtmlWebpackPlugin({
       inject: 'body',
       template: './src/template.html',
