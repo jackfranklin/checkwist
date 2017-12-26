@@ -7,6 +7,8 @@ import { getUserTemplatesMap } from './firebase/templates'
 import type { ChecklistTemplate } from './firebase/templates'
 import Spinner from './spinner'
 
+import { green, blue, stylesForButtonWithColour } from './styles'
+
 type Props = {
   user: $npm$firebase$auth$User,
 }
@@ -21,17 +23,13 @@ const NewTemplateBtn = styled(Link)`
   margin-top: 30px;
   height: 50px;
   text-align: center;
-  border: 1px solid #eee;
   line-height: 50px;
   font-size: 20px;
-  background: #ddd;
+  ${stylesForButtonWithColour(green)};
   &:link,
   &:visited {
     color: #111;
     text-decoration: none;
-  }
-  &:hover {
-    background: #ccc;
   }
 `
 
@@ -58,16 +56,20 @@ const TemplateLink = styled(Link)`
   text-align: center;
   height: 50px;
   display: block;
-  background: #eee;
   border-radius: 3px;
   &:link,
   &:visited {
     color: #111;
     text-decoration: none;
   }
-  &:hover {
-    background: #ddd;
-  }
+`
+
+const EditTemplateLink = TemplateLink.extend`
+  ${stylesForButtonWithColour(blue)};
+`
+
+const UseTemplateLink = TemplateLink.extend`
+  ${stylesForButtonWithColour(green)};
 `
 
 const TemplateName = styled.h5`
@@ -93,8 +95,12 @@ export default class ChecklistTemplates extends Component<Props, State> {
     return (
       <TemplateListItem key={templateId}>
         <TemplateName>{template.name}</TemplateName>
-        <TemplateLink to={`/templates/${templateId}`}>Edit</TemplateLink>
-        <TemplateLink to={`/new-from-template/${templateId}`}>Use</TemplateLink>
+        <EditTemplateLink to={`/templates/${templateId}`}>
+          Edit
+        </EditTemplateLink>
+        <UseTemplateLink to={`/new-from-template/${templateId}`}>
+          Use
+        </UseTemplateLink>
       </TemplateListItem>
     )
   }

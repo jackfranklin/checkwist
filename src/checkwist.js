@@ -10,6 +10,7 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 import ChecklistTemplateForm from './checklist-template-form'
 import NewFromTemplate from './new-from-template'
 import ChecklistInstanceForm from './checklist-instance-form'
+import { Container } from './styles'
 
 type Props = {}
 type State = { user: ?$npm$firebase$auth$User }
@@ -37,7 +38,7 @@ class Checkwist extends Component<Props, State> {
     const { user } = this.state
     return (
       <BrowserRouter>
-        <Fragment>
+        <Container>
           <Header user={user} />
           {user && (
             <Fragment>
@@ -104,7 +105,7 @@ class Checkwist extends Component<Props, State> {
               />
             </Fragment>
           )}
-        </Fragment>
+        </Container>
       </BrowserRouter>
     )
   }
