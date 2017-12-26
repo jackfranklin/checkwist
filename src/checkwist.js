@@ -19,6 +19,9 @@ type State = { user: ?$npm$firebase$auth$User, isLoading: boolean }
 injectGlobal`
   ${normaliseCss}
   * { font-family: 'Slabo 27px', serif; box-sizing: border-box; }
+  button {
+    font-family: 'Slabo 27px', serif;
+  }
 `
 
 const Footer = styled.footer`

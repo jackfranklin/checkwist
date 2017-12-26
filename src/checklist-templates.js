@@ -1,13 +1,13 @@
 // @flow
 
 import React, { Component, Fragment } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
-import { getUserTemplatesMap } from './firebase/templates'
+import { getUserTemplatesMap, removeUserTemplate } from './firebase/templates'
 import type { ChecklistTemplate } from './firebase/templates'
 import Spinner from './spinner'
 
-import { green, blue, stylesForButtonWithColour } from './styles'
+import { red, green, blue, stylesForButtonWithColour } from './styles'
 
 type Props = {
   user: $npm$firebase$auth$User,
@@ -49,7 +49,7 @@ const TemplateListItem = styled.li`
   height: 70px;
 `
 
-const TemplateLink = styled(Link)`
+const templateActionStyles = css`
   width: 15%;
   line-height: 50px;
   margin-left: 4%;
@@ -62,6 +62,15 @@ const TemplateLink = styled(Link)`
     color: #111;
     text-decoration: none;
   }
+`
+const TemplateLink = styled(Link)`
+  ${templateActionStyles};
+`
+
+const DeleteTemplateBtn = styled.button`
+  border: none;
+  ${templateActionStyles};
+  ${stylesForButtonWithColour(red)};
 `
 
 const EditTemplateLink = TemplateLink.extend`
@@ -89,12 +98,24 @@ export default class ChecklistTemplates extends Component<Props, State> {
     })
   }
 
+  deleteTemplate(id: string, e: SyntheticInputEvent<HTMLInputElement>) {
+    removeUserTemplate(this.props.user.uid, id).then(() => {
+      this.setState(({ templates }) => {
+        const templatesCopy = new Map(templates)
+        templatesCopy.delete(id)
+        return { templates: templatesCopy }
+      })
+    })
+  }
   renderTemplate(templateId: string) {
     const template = this.state.templates.get(templateId)
     if (!template) return null
     return (
       <TemplateListItem key={templateId}>
         <TemplateName>{template.name}</TemplateName>
+        <DeleteTemplateBtn onClick={e => this.deleteTemplate(templateId, e)}>
+          Delete
+        </DeleteTemplateBtn>
         <EditTemplateLink to={`/templates/${templateId}`}>
           Edit
         </EditTemplateLink>

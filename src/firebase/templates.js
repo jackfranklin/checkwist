@@ -33,6 +33,12 @@ const fetchUserTemplates = (
     .ref(`checklistTemplates/${userId}`)
     .on('value', cb)
 
+export const removeUserTemplate = (userId: string, templateId: string) =>
+  firebase
+    .database()
+    .ref(`checklistTemplates/${userId}/${templateId}`)
+    .remove()
+
 export const fetchUserTemplate = (
   userId: string,
   templateId: string,
