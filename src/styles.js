@@ -31,6 +31,11 @@ export const stylesForButtonWithColour = (colourFn: ColourFnType) => css`
   transition: background 0.2s ease-in;
   &:hover {
     background: ${colourFn(1)};
+    cursor: pointer;
+  }
+  &:disabled:hover {
+    background: ${colourFn()};
+    cursor: default;
   }
 `
 export const SubmitButton = styled.button.attrs({

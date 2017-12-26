@@ -18,6 +18,7 @@ import {
 } from './checklist-template-creator'
 import type { ChecklistTemplateForm } from './checklist-template-creator'
 import Spinner from './spinner'
+import { green, blue, red, stylesForButtonWithColour } from './styles'
 
 type Props = {
   user: $npm$firebase$auth$User,
@@ -71,25 +72,19 @@ const FormItem = styled.li`
 `
 
 const FormItemInput = FormTextInput.extend`
-  width: 75%;
+  width: 90%;
 `
 
 const AddNewFormItem = styled.button.attrs({ type: 'button' })`
-  position: absolute;
-  right: 5px;
-  bottom: -55px;
   display: block;
-  width: 50px;
+  width: 60%;
+  margin: 0 auto;
   height: 50px;
   border: 2px solid #f5f5f5;
-  border-radius: 50%;
+  ${stylesForButtonWithColour(blue)};
   color: #f5f5f5;
   text-align: center;
   text-decoration: none;
-  background: #464646;
-  box-shadow: 0 0 3px gray;
-  font-size: 20px;
-  font-weight: bold;
   :hover {
     cursor: pointer;
   }
@@ -111,19 +106,9 @@ const RemoveFormItem = styled.button.attrs({ type: 'button' })`
   color: #f5f5f5;
   text-align: center;
   text-decoration: none;
-  background: #464646;
-  box-shadow: 0 0 3px gray;
   font-size: 20px;
   font-weight: bold;
-  :hover {
-    cursor: pointer;
-  }
-  &[disabled] {
-    opacity: 0.5;
-    &:hover {
-      cursor: default;
-    }
-  }
+  ${stylesForButtonWithColour(red)};
 `
 
 const FormItemCheckbox = styled.input.attrs({
@@ -140,14 +125,12 @@ const SaveButton = styled.button.attrs({ type: 'submit' })`
   background: #111;
   color: #fff;
   margin-top: 70px;
-  &:hover {
-    cursor: pointer;
-    background: #ccc;
-  }
+  border: none;
   &[disabled] {
     cursor: default;
     opacity: 0.5;
   }
+  ${stylesForButtonWithColour(green)};
 `
 
 export default class NewChecklistTemplate extends Component<Props, State> {
@@ -178,7 +161,7 @@ export default class NewChecklistTemplate extends Component<Props, State> {
         }
       )
     } else {
-      this.setState({ isLoading: false })
+      this.setState({ isLoading: false, form: addNewItem(this.state.form) })
     }
   }
   onNameChange = (e: SyntheticInputEvent<HTMLInputElement>) =>
@@ -293,7 +276,7 @@ export default class NewChecklistTemplate extends Component<Props, State> {
         </FormNameGroup>
 
         <FormGroup>
-          <h4>Checklist items</h4>
+          <p>Checklist items</p>
           <FormItemsList innerRef={items => (this.itemsDom = items)}>
             {itemIds.map((itemId, index) => this.renderItem(itemId, index))}
           </FormItemsList>
@@ -301,7 +284,7 @@ export default class NewChecklistTemplate extends Component<Props, State> {
             disabled={this.addButtonDisabled()}
             onClick={this.addNewItem}
           >
-            +
+            Add a new item
           </AddNewFormItem>
         </FormGroup>
         <SaveButton>Save</SaveButton>
