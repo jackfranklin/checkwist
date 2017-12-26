@@ -56,9 +56,9 @@ const TemplateListItem = styled.li`
 `
 
 const templateActionStyles = css`
-  width: 15%;
+  width: 20%;
   line-height: 50px;
-  margin-left: 4%;
+  margin-left: 3%;
   text-align: center;
   height: 50px;
   display: block;
@@ -105,13 +105,15 @@ export default class ChecklistTemplates extends Component<Props, State> {
   }
 
   deleteTemplate(id: string, e: SyntheticInputEvent<HTMLInputElement>) {
-    removeUserTemplate(this.props.user.uid, id).then(() => {
-      this.setState(({ templates }) => {
-        const templatesCopy = new Map(templates)
-        templatesCopy.delete(id)
-        return { templates: templatesCopy }
+    if (window.confirm('Are you sure you want to delete this template?')) {
+      removeUserTemplate(this.props.user.uid, id).then(() => {
+        this.setState(({ templates }) => {
+          const templatesCopy = new Map(templates)
+          templatesCopy.delete(id)
+          return { templates: templatesCopy }
+        })
       })
-    })
+    }
   }
   renderTemplate(templateId: string) {
     const template = this.state.templates.get(templateId)

@@ -48,19 +48,20 @@ const FormNameGroup = FormGroup.extend`
 `
 
 const FormLabel = styled.label`
-  width: 18%;
+  width: 28%;
 `
 
 const FormTextInput = styled.input`
-  width: 100%;
+  width: 70%;
   margin-left: auto;
   padding: 10px;
+  border: 1px solid #ccc;
 `
 
 const FormItemsList = styled.ul`
   padding: 0;
   margin: 0 auto;
-  width: 90%;
+  width: 100%;
 `
 
 const FormItem = styled.li`
@@ -82,7 +83,7 @@ const FormItem = styled.li`
 `
 
 const FormItemInput = FormTextInput.extend`
-  width: 80%;
+  width: 70%;
 `
 
 const AddNewFormItem = styled.button.attrs({ type: 'button' })`
