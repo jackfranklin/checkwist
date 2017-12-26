@@ -10,6 +10,7 @@ import { FIREBASE_DEV, FIREBASE_PROD } from './firebase/config'
 
 const config =
   process.env.NODE_ENV === 'development' ? FIREBASE_DEV : FIREBASE_PROD
+
 if (!firebase.apps.length) {
   firebase.initializeApp(config)
 }

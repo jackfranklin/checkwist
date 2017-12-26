@@ -15,49 +15,49 @@ declare interface $npm$firebase$Config {
 
 declare interface $npm$firebase$auth$Error {
   code:
-    | "auth/app-deleted"
-    | "auth/app-not-authorized"
-    | "auth/argument-error"
-    | "auth/invalid-api-key"
-    | "auth/invalid-user-token"
-    | "auth/network-request-failed"
-    | "auth/operation-not-allowed"
-    | "auth/requires-recent-login"
-    | "auth/too-many-requests"
-    | "auth/unauthorized-domain"
-    | "auth/user-disabled"
-    | "auth/user-token-expired"
-    | "auth/web-storage-unsupported"
-    | "auth/invalid-email"
-    | "auth/account-exists-with-different-credential"
-    | "auth/invalid-credential"
-    | "auth/user-not-found"
-    | "auth/wrong-password"
-    | "auth/invalid-verification-code"
-    | "auth/invalid-verification-id"
-    | "auth/expired-action-code"
-    | "auth/invalid-action-code"
-    | "auth/invalid-verification-code"
-    | "auth/missing-verification-code"
-    | "auth/captcha-check-failed"
-    | "auth/invalid-phone-number"
-    | "auth/missing-phone-number"
-    | "auth/quota-exceeded"
-    | "auth/credential-already-in-use"
-    | "auth/email-already-in-use"
-    | "auth/provider-already-linked"
-    | "auth/auth-domain-config-required"
-    | "auth/cancelled-popup-request"
-    | "auth/popup-blocked"
-    | "auth/operation-not-supported-in-this-environment"
-    | "auth/popup-closed-by-user"
-    | "auth/unauthorized-domain"
-    | "auth/no-such-provider";
+    | 'auth/app-deleted'
+    | 'auth/app-not-authorized'
+    | 'auth/argument-error'
+    | 'auth/invalid-api-key'
+    | 'auth/invalid-user-token'
+    | 'auth/network-request-failed'
+    | 'auth/operation-not-allowed'
+    | 'auth/requires-recent-login'
+    | 'auth/too-many-requests'
+    | 'auth/unauthorized-domain'
+    | 'auth/user-disabled'
+    | 'auth/user-token-expired'
+    | 'auth/web-storage-unsupported'
+    | 'auth/invalid-email'
+    | 'auth/account-exists-with-different-credential'
+    | 'auth/invalid-credential'
+    | 'auth/user-not-found'
+    | 'auth/wrong-password'
+    | 'auth/invalid-verification-code'
+    | 'auth/invalid-verification-id'
+    | 'auth/expired-action-code'
+    | 'auth/invalid-action-code'
+    | 'auth/invalid-verification-code'
+    | 'auth/missing-verification-code'
+    | 'auth/captcha-check-failed'
+    | 'auth/invalid-phone-number'
+    | 'auth/missing-phone-number'
+    | 'auth/quota-exceeded'
+    | 'auth/credential-already-in-use'
+    | 'auth/email-already-in-use'
+    | 'auth/provider-already-linked'
+    | 'auth/auth-domain-config-required'
+    | 'auth/cancelled-popup-request'
+    | 'auth/popup-blocked'
+    | 'auth/operation-not-supported-in-this-environment'
+    | 'auth/popup-closed-by-user'
+    | 'auth/unauthorized-domain'
+    | 'auth/no-such-provider';
   message: string;
 }
 
 declare interface $npm$firebase$Error {
-  code: $PropertyType<$npm$firebase$auth$Error, "code"> | "app/no-app";
+  code: $PropertyType<$npm$firebase$auth$Error, 'code'> | 'app/no-app';
   message: string;
   name: string;
   stack: ?string;
@@ -145,8 +145,8 @@ declare interface $npm$firebase$auth$ConfirmationResult {
 
 declare type $npm$firebase$auth$UserProfile = {
   displayName?: string,
-  photoURL?: string
-};
+  photoURL?: string,
+}
 
 declare interface $npm$firebase$auth$AdditionalUserInfo {
   providerId: string;
@@ -282,20 +282,20 @@ declare type $npm$firebase$auth$OAuthProvider =
   | $npm$firebase$auth$FacebookAuthProvider
   | $npm$firebase$auth$GithubAuthProvider
   | $npm$firebase$auth$GoogleAuthProvider
-  | $npm$firebase$auth$TwitterAuthProvider;
+  | $npm$firebase$auth$TwitterAuthProvider
 
 /** **** database ******/
-declare type $npm$firebase$database$Value = any;
+declare type $npm$firebase$database$Value = any
 declare type $npm$firebase$database$OnCompleteCallback = (
   error: ?Object
-) => void;
+) => void
 declare type $npm$firebase$database$QueryEventType =
-  | "value"
-  | "child_added"
-  | "child_changed"
-  | "child_removed"
-  | "child_moved";
-declare type $npm$firebase$database$Priority = string | number | null;
+  | 'value'
+  | 'child_added'
+  | 'child_changed'
+  | 'child_removed'
+  | 'child_moved'
+declare type $npm$firebase$database$Priority = string | number | null
 
 declare class $npm$firebase$database$Database {
   app: $npm$firebase$App;
@@ -341,7 +341,7 @@ declare class $npm$firebase$database$OnDisconnect {
 declare type $npm$firebase$database$Callback = (
   $npm$firebase$database$DataSnapshot,
   ?string
-) => void;
+) => void
 
 declare class $npm$firebase$database$Query {
   ref: $npm$firebase$database$Reference;
@@ -421,7 +421,7 @@ declare class $npm$firebase$database$Reference extends $npm$firebase$database$Qu
     applyLocally?: boolean
   ): Promise<{
     committed: boolean,
-    snapshot: $npm$firebase$database$DataSnapshot | null
+    snapshot: $npm$firebase$database$DataSnapshot | null,
   }>;
   update(
     values: { [path: string]: $npm$firebase$database$Value },
@@ -437,17 +437,17 @@ declare class $npm$firebase$database$ThenableReference extends $npm$firebase$dat
 
 /** **** storage ******/
 declare type $npm$firebase$storage$StringFormat =
-  | "raw"
-  | "base64"
-  | "base64url"
-  | "data_url";
-declare type $npm$firebase$storage$TaskEvent = "state_changed";
+  | 'raw'
+  | 'base64'
+  | 'base64url'
+  | 'data_url'
+declare type $npm$firebase$storage$TaskEvent = 'state_changed'
 declare type $npm$firebase$storage$TaskState =
-  | "running"
-  | "paused"
-  | "success"
-  | "canceled"
-  | "error";
+  | 'running'
+  | 'paused'
+  | 'success'
+  | 'canceled'
+  | 'error'
 
 declare class $npm$firebase$storage$Storage {
   app: $npm$firebase$App;
@@ -516,15 +516,14 @@ declare interface $npm$firebase$storage$Observer {
   complete?: () => void;
 }
 
-declare type $npm$firebase$storage$Unsubscribe = () => void;
+declare type $npm$firebase$storage$Unsubscribe = () => void
 
 declare type $npm$firebase$storage$Subscribe = (
-  observerOrNext:
-    | $npm$firebase$storage$Observer
-    | ((snapshot: $npm$firebase$storage$UploadTaskSnapshot) => void),
+  observerOrNext: | $npm$firebase$storage$Observer
+  | ((snapshot: $npm$firebase$storage$UploadTaskSnapshot) => void),
   onError?: (error: Error) => void,
   onComplete?: () => void
-) => $npm$firebase$storage$Unsubscribe;
+) => $npm$firebase$storage$Unsubscribe
 
 declare class $npm$firebase$storage$UploadTask extends Promise<
   $npm$firebase$storage$UploadTaskSnapshot
@@ -537,9 +536,8 @@ declare class $npm$firebase$storage$UploadTask extends Promise<
   ): $npm$firebase$storage$Subscribe;
   on(
     event: $npm$firebase$storage$TaskEvent,
-    observerOrNext:
-      | $npm$firebase$storage$Observer
-      | ((snapshot: $npm$firebase$storage$UploadTaskSnapshot) => void),
+    observerOrNext: | $npm$firebase$storage$Observer
+    | ((snapshot: $npm$firebase$storage$UploadTaskSnapshot) => void),
     onError?: (error: Error) => void,
     onComplete?: () => void
   ): $npm$firebase$storage$Unsubscribe;
@@ -558,7 +556,7 @@ declare class $npm$firebase$storage$UploadTaskSnapshot {
 }
 
 // Exporting the types
-declare module "firebase" {
+declare module 'firebase/app' {
   declare module.exports: {
     +apps: Array<$npm$firebase$App>,
     initializeApp(
@@ -572,7 +570,7 @@ declare module "firebase" {
     FirebaseUserInfo: typeof $npm$firebase$auth$UserInfo,
     app: {
       (name?: string): typeof $npm$firebase$App,
-      App: typeof $npm$firebase$App
+      App: typeof $npm$firebase$App,
     },
     auth: {
       (app?: $npm$firebase$App): $npm$firebase$auth$Auth,
@@ -590,7 +588,7 @@ declare module "firebase" {
       GithubAuthProvider: typeof $npm$firebase$auth$GithubAuthProvider,
       GoogleAuthProvider: typeof $npm$firebase$auth$GoogleAuthProvider,
       PhoneAuthProvider: typeof $npm$firebase$auth$PhoneAuthProvider,
-      TwitterAuthProvider: typeof $npm$firebase$auth$TwitterAuthProvider
+      TwitterAuthProvider: typeof $npm$firebase$auth$TwitterAuthProvider,
     },
     database: {
       (app?: $npm$firebase$App): $npm$firebase$database$Database,
@@ -604,7 +602,7 @@ declare module "firebase" {
       Query: typeof $npm$firebase$database$Query,
       Reference: typeof $npm$firebase$database$Reference,
       ServerValue: typeof $npm$firebase$database$ServerValue,
-      ThenableReference: typeof $npm$firebase$database$ThenableReference
+      ThenableReference: typeof $npm$firebase$database$ThenableReference,
     },
     storage: {
       (app?: $npm$firebase$App): $npm$firebase$storage$Storage,
@@ -614,61 +612,7 @@ declare module "firebase" {
       SettableMetadata: typeof $npm$firebase$storage$SettableMetadata,
       UploadMetadata: typeof $npm$firebase$storage$UploadMetadata,
       UploadTask: typeof $npm$firebase$storage$UploadTask,
-      UploadTaskSnapshot: typeof $npm$firebase$storage$UploadTaskSnapshot
-    }
-  };
-}
-declare module "firebase/app" {
-  declare module.exports: {
-    (name?: string): $npm$firebase$App,
-    App: typeof $npm$firebase$App
-  };
-}
-declare module "firebase/auth" {
-  declare module.exports: {
-    (app?: $npm$firebase$App): $npm$firebase$auth$Auth,
-    FirebaseAdditionalUserInfo: $npm$firebase$auth$AdditionalUserInfo,
-    FirebaseUserCredential: $npm$firebase$auth$UserCredential,
-    ActionCodeInfo: $npm$firebase$auth$ActionCodeInfo,
-    ApplicationVerifier: $npm$firebase$auth$ApplicationVerifier,
-    Auth: typeof $npm$firebase$auth$Auth,
-    AuthCredential: $npm$firebase$auth$AuthCredential,
-    AuthProvider: $npm$firebase$auth$AuthProvider,
-    ConfirmationResult: $npm$firebase$auth$ConfirmationResult,
-    EmailAuthProvider: typeof $npm$firebase$auth$EmailAuthProvider,
-    Error: $npm$firebase$auth$Error,
-    FacebookAuthProvider: typeof $npm$firebase$auth$FacebookAuthProvider,
-    GithubAuthProvider: typeof $npm$firebase$auth$GithubAuthProvider,
-    GoogleAuthProvider: typeof $npm$firebase$auth$GoogleAuthProvider,
-    PhoneAuthProvider: typeof $npm$firebase$auth$PhoneAuthProvider,
-    TwitterAuthProvider: typeof $npm$firebase$auth$TwitterAuthProvider
-  };
-}
-declare module "firebase/database" {
-  declare module.exports: {
-    (app?: $npm$firebase$App): $npm$firebase$database$Database,
-    enableLogging(
-      logger?: boolean | ((msg: string) => void),
-      persistent?: boolean
-    ): void,
-    DataSnapshot: typeof $npm$firebase$database$DataSnapshot,
-    Database: typeof $npm$firebase$database$Database,
-    OnDisconnect: typeof $npm$firebase$database$OnDisconnect,
-    Query: typeof $npm$firebase$database$Query,
-    Reference: typeof $npm$firebase$database$Reference,
-    ServerValue: typeof $npm$firebase$database$ServerValue,
-    ThenableReference: typeof $npm$firebase$database$ThenableReference
-  };
-}
-declare module "firebase/storage" {
-  declare module.exports: {
-    (app?: $npm$firebase$App): $npm$firebase$storage$Storage,
-    Storage: typeof $npm$firebase$storage$Storage,
-    FullMetadata: typeof $npm$firebase$storage$FullMetadata,
-    Reference: typeof $npm$firebase$storage$Reference,
-    SettableMetadata: typeof $npm$firebase$storage$SettableMetadata,
-    UploadMetadata: typeof $npm$firebase$storage$UploadMetadata,
-    UploadTask: typeof $npm$firebase$storage$UploadTask,
-    UploadTaskSnapshot: typeof $npm$firebase$storage$UploadTaskSnapshot
-  };
+      UploadTaskSnapshot: typeof $npm$firebase$storage$UploadTaskSnapshot,
+    },
+  }
 }
