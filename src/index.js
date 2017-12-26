@@ -6,15 +6,10 @@ import React from 'react'
 import { render } from 'react-dom'
 import Checkwist from './checkwist'
 import firebase from 'firebase'
+import { FIREBASE_DEV, FIREBASE_PROD } from './firebase/config'
 
-const config = {
-  apiKey: 'AIzaSyCvSLfAPLQzoLG6BMXQSLcFfwuTrf10TGk',
-  authDomain: 'checkwist-dev.firebaseapp.com',
-  databaseURL: 'https://checkwist-dev.firebaseio.com',
-  projectId: 'checkwist-dev',
-  storageBucket: 'checkwist-dev.appspot.com',
-  messagingSenderId: '219076333696',
-}
+const config =
+  process.env.NODE_ENV === 'development' ? FIREBASE_DEV : FIREBASE_PROD
 if (!firebase.apps.length) {
   firebase.initializeApp(config)
 }
