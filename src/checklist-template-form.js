@@ -19,6 +19,7 @@ import {
 import type { ChecklistTemplateForm } from './checklist-template-creator'
 import Spinner from './spinner'
 import { green, blue, red, stylesForButtonWithColour } from './styles'
+import ChecklistLogo from './logo'
 
 type Props = {
   user: $npm$firebase$auth$User,
@@ -47,11 +48,11 @@ const FormNameGroup = FormGroup.extend`
 `
 
 const FormLabel = styled.label`
-  width: 30%;
+  width: 18%;
 `
 
 const FormTextInput = styled.input`
-  width: 65%;
+  width: 100%;
   margin-left: auto;
   padding: 10px;
 `
@@ -69,10 +70,19 @@ const FormItem = styled.li`
   margin-bottom: 10px;
   border-bottom: 1px solid #eee;
   padding-bottom: 10px;
+  > svg {
+    display: block;
+    width: 50px;
+    height: 30px;
+    padding-bottom: 5px;
+    path {
+      fill: #111;
+    }
+  }
 `
 
 const FormItemInput = FormTextInput.extend`
-  width: 90%;
+  width: 87%;
 `
 
 const AddNewFormItem = styled.button.attrs({ type: 'button' })`
@@ -243,7 +253,7 @@ export default class NewChecklistTemplate extends Component<Props, State> {
     if (!item) return null
     return (
       <FormItem key={item.id}>
-        <FormItemCheckbox />
+        <ChecklistLogo />
         <FormItemInput
           value={item.text}
           onChange={e => this.updateItem(itemId, e.target.value)}
