@@ -1,7 +1,7 @@
 // @flow
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/database'
+import firebase from 'firebase'
+// import 'firebase/auth'
+// import 'firebase/database'
 
 export const FIREBASE_DEV = {
   apiKey: 'AIzaSyCvSLfAPLQzoLG6BMXQSLcFfwuTrf10TGk',
