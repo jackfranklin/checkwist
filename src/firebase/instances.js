@@ -33,6 +33,11 @@ export const checklistInstancesToArray = (
   return keys.map(key => [key, obj[key]])
 }
 
+export const removeUserInstance = (userId: string, instanceId: string) =>
+  firebase
+    .database()
+    .ref(`checklistInstances/${userId}/${instanceId}`)
+    .remove()
 export const fetchUserInstance = (
   userId: string,
   instanceId: string,
