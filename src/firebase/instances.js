@@ -23,6 +23,16 @@ export type ChecklistFirebaseInstance = {
   name: string,
 }
 
+type InstancesFromFirebase = {
+  [id: string]: ChecklistFirebaseInstance,
+}
+export const checklistInstancesToArray = (
+  obj: InstancesFromFirebase
+): Array<[string, ChecklistFirebaseInstance]> => {
+  const keys: string[] = Object.keys(obj)
+  return keys.map(key => [key, obj[key]])
+}
+
 export const fetchUserInstance = (
   userId: string,
   instanceId: string,
@@ -31,4 +41,13 @@ export const fetchUserInstance = (
   firebase
     .database()
     .ref(`checklistInstances/${userId}/${instanceId}`)
+    .on('value', cb)
+
+export const fetchUserInstances = (
+  userId: string,
+  cb: $npm$firebase$database$DataSnapshot => void
+) =>
+  firebase
+    .database()
+    .ref(`checklistInstances/${userId}`)
     .on('value', cb)

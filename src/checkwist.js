@@ -12,6 +12,7 @@ import NewFromTemplate from './new-from-template'
 import ChecklistInstanceForm from './checklist-instance-form'
 import { Container, yellow, blue } from './styles'
 import styled from 'styled-components'
+import ChecklistInstances from './checklist-instances'
 
 type Props = {}
 type State = { user: ?$npm$firebase$auth$User, isLoading: boolean }
@@ -41,6 +42,14 @@ const Footer = styled.footer`
     color: #111;
   }
 `
+
+const ChecklistDivider = styled.h3`
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  font-size: 35px;
+`
+
 type UserRouteProps = { user: $npm$firebase$auth$User }
 
 const UserRoutes = ({ user }: UserRouteProps) => (
@@ -48,7 +57,14 @@ const UserRoutes = ({ user }: UserRouteProps) => (
     <Route
       path="/"
       exact
-      render={routeProps => <ChecklistTemplates {...routeProps} user={user} />}
+      render={routeProps => (
+        <div>
+          <ChecklistDivider>Checklists</ChecklistDivider>
+          <ChecklistInstances {...routeProps} user={user} />
+          <ChecklistDivider>Templates</ChecklistDivider>
+          <ChecklistTemplates {...routeProps} user={user} />
+        </div>
+      )}
     />
     <Route
       path="/templates/new"
