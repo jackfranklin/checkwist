@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { getUserTemplatesMap, removeUserTemplate } from './firebase/templates'
@@ -140,7 +140,7 @@ export default class ChecklistTemplates extends Component<Props, State> {
     return this.state.isLoading ? (
       <Spinner />
     ) : (
-      <Fragment>
+      <div>
         <TemplatesList>
           {templateIds.map(templateId => this.renderTemplate(templateId))}
           {templateIds.length === 0 && (
@@ -150,7 +150,7 @@ export default class ChecklistTemplates extends Component<Props, State> {
         <NewTemplateBtn to="/templates/new">
           Create a new template
         </NewTemplateBtn>
-      </Fragment>
+      </div>
     )
   }
 }
