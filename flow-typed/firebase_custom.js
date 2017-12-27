@@ -1,6 +1,3 @@
-// flow-typed signature: a7b8f0098b92d3aa18384a8bba40247b
-// flow-typed version: 3c3546d42d/firebase_v4.x.x/flow_>=v0.34.x
-
 /* @flow */
 /** ** firebase ****/
 
