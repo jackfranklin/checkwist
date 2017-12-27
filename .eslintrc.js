@@ -11,7 +11,6 @@ module.exports = {
   plugins: ['prettier', 'flowtype'],
   extends: [
     'unobtrusive',
-    'unobtrusive/import',
     'unobtrusive/react',
     'prettier',
     'plugin:flowtype/recommended',
@@ -19,10 +18,6 @@ module.exports = {
   rules: {
     'prettier/prettier': ['error'],
     'react/no-unescaped-entities': 'error',
-
-    // don't think this is an issue and happens a lot
-    // with Redux connected components
-    'import/no-named-as-default': 'off',
 
     // we want to enforce proptypes in all components
     'react/prop-types': 'warn',

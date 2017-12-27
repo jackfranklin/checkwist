@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import { signUserIn, signUserOut } from './firebase/auth'
 import ChecklistLogo from './logo'
@@ -68,9 +68,7 @@ export default class Header extends Component<Props, null> {
           <ChecklistLogo />
           <span>
             Checkwist{this.props.user ? (
-              <Fragment>
-                &nbsp;&mdash;&nbsp;{this.props.user.displayName}
-              </Fragment>
+              <span>&nbsp;&mdash;&nbsp;{this.props.user.displayName}</span>
             ) : null}
           </span>
         </Logo>
