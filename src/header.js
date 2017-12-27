@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { signUserIn, signUserOut } from './firebase/auth'
 import ChecklistLogo from './logo'
+import { Link } from 'react-router-dom'
 
 type Props = {
   user: ?$npm$firebase$auth$User,
@@ -17,7 +18,7 @@ const NavBar = styled.nav`
   align-items: center;
 `
 
-const Logo = styled.a`
+const Logo = styled(Link)`
   font-size: 20px;
   display: flex;
   &:link,
@@ -64,7 +65,7 @@ export default class Header extends Component<Props, null> {
   render() {
     return (
       <NavBar>
-        <Logo href="/">
+        <Logo to="/">
           <ChecklistLogo />
           <span>
             Checkwist{this.props.user ? (
