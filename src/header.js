@@ -1,13 +1,8 @@
-// @flow
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { signUserIn, signUserOut } from './firebase/auth'
 import ChecklistLogo from './logo'
 import { Link } from 'react-router-dom'
-
-type Props = {
-  user: ?$npm$firebase$auth$User,
-}
 
 const NavBar = styled.nav`
   display: flex;
@@ -56,8 +51,8 @@ const AuthButton = styled.a`
   }
 `
 
-export default class Header extends Component<Props, null> {
-  changeAuth = (e: SyntheticInputEvent<HTMLInputElement>) => {
+export default class Header extends Component {
+  changeAuth = e => {
     e.preventDefault()
     this.props.user ? signUserOut() : signUserIn()
   }

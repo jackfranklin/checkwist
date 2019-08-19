@@ -8,13 +8,8 @@ module.exports = {
   parserOptions: {
     sourceType: 'module',
   },
-  plugins: ['prettier', 'flowtype'],
-  extends: [
-    'unobtrusive',
-    'unobtrusive/react',
-    'prettier',
-    'plugin:flowtype/recommended',
-  ],
+  plugins: ['prettier'],
+  extends: ['unobtrusive', 'unobtrusive/react', 'prettier'],
   rules: {
     'prettier/prettier': ['error'],
     'react/no-unescaped-entities': 'error',

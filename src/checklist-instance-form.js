@@ -1,20 +1,9 @@
-// @flow
 import React, { Component } from 'react'
 import { fetchUserInstance } from './firebase/instances'
-import type { InstanceItem, ChecklistInstance } from './firebase/instances'
 import Spinner from './spinner'
 import styled from 'styled-components'
 import distanceInWords from 'date-fns/distance_in_words'
 
-type Props = {
-  instanceId: string,
-  user: $npm$firebase$auth$User,
-}
-
-type State = {
-  checklist: ChecklistInstance | null,
-  isLoading: boolean,
-}
 const FormItemsList = styled.ul`
   padding: 0;
   margin: 0 auto;
@@ -47,8 +36,8 @@ const FormItemCheckbox = styled.input.attrs({
   margin-right: 5px;
 `
 
-class ChecklistInstanceForm extends Component<Props, State> {
-  state: State = {
+class ChecklistInstanceForm extends Component {
+  state = {
     checklist: null,
     isLoading: true,
   }
@@ -57,9 +46,7 @@ class ChecklistInstanceForm extends Component<Props, State> {
     fetchUserInstance(this.props.user.uid, this.props.instanceId, snapshot => {
       const checklist = snapshot.val()
       if (checklist) {
-        const itemsAsMap: Map<string, InstanceItem> = new Map(
-          checklist.items.map(item => [item.id, item])
-        )
+        const itemsAsMap = new Map(checklist.items.map(item => [item.id, item]))
         this.setState({
           isLoading: false,
           checklist: {
@@ -71,7 +58,7 @@ class ChecklistInstanceForm extends Component<Props, State> {
     })
   }
 
-  toggleItemCompletion(itemId: string) {
+  toggleItemCompletion(itemId) {
     if (this.state.checklist !== null) {
       const item = this.state.checklist.items.get(itemId)
       if (item && this.state.checklist !== null) {
@@ -90,7 +77,7 @@ class ChecklistInstanceForm extends Component<Props, State> {
     }
   }
 
-  renderItem(itemId: string, item: ?InstanceItem) {
+  renderItem(itemId, item) {
     if (item) {
       return (
         <FormItem key={itemId} onClick={e => this.toggleItemCompletion(itemId)}>
@@ -104,7 +91,6 @@ class ChecklistInstanceForm extends Component<Props, State> {
   }
   render() {
     const { checklist, isLoading } = this.state
-    console.log('created at', checklist && checklist.createdAt)
     return isLoading ? (
       <Spinner />
     ) : checklist ? (

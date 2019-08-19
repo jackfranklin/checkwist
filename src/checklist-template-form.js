@@ -1,5 +1,3 @@
-// @flow
-
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import {
@@ -7,7 +5,6 @@ import {
   writeNewChecklistTemplate,
   updateChecklistTemplate,
 } from './firebase/templates'
-import type { RouterHistory } from 'react-router-dom'
 import {
   newChecklist,
   updateItemText,
@@ -16,21 +13,9 @@ import {
   addNewItem,
   removeEmptyItems,
 } from './checklist-template-creator'
-import type { ChecklistTemplateForm } from './checklist-template-creator'
 import Spinner from './spinner'
 import { green, blue, red, stylesForButtonWithColour } from './styles'
 import ChecklistLogo from './logo'
-
-type Props = {
-  user: $npm$firebase$auth$User,
-  checklistId?: string,
-  history: RouterHistory,
-}
-
-type State = {
-  form: ChecklistTemplateForm,
-  isLoading: boolean,
-}
 
 const FormGroup = styled.div`
   padding: 10px;
@@ -136,11 +121,11 @@ const SaveButton = styled.button.attrs({ type: 'submit' })`
   ${stylesForButtonWithColour(green)};
 `
 
-export default class NewChecklistTemplate extends Component<Props, State> {
+export default class NewChecklistTemplate extends Component {
   // TODO: figure out what this type is
   itemsDom: any
 
-  state: State = { form: newChecklist(), isLoading: true }
+  state = { form: newChecklist(), isLoading: true }
 
   componentDidMount() {
     if (this.props.checklistId) {
@@ -167,26 +152,23 @@ export default class NewChecklistTemplate extends Component<Props, State> {
       this.setState({ isLoading: false, form: addNewItem(this.state.form) })
     }
   }
-  onNameChange = (e: SyntheticInputEvent<HTMLInputElement>) => {
+  onNameChange = e => {
     const newName = e.target.value
     this.setState(({ form }) => ({
       form: { ...form, name: newName },
     }))
   }
 
-  updateItem(itemId: string, value: string) {
+  updateItem(itemId, value) {
     this.setState({ form: updateItemText(this.state.form, itemId, value) })
   }
 
-  removeItem(itemId: string, e: SyntheticInputEvent<HTMLInputElement>) {
+  removeItem(itemId, e) {
     e.preventDefault()
     this.setState({ form: removeItem(this.state.form, itemId) })
   }
 
-  addNewItemBelowIndex(
-    index: number,
-    e: SyntheticInputEvent<HTMLInputElement>
-  ) {
+  addNewItemBelowIndex(index, e) {
     e.preventDefault()
     this.setState(
       { form: addNewItemBelowIndex(this.state.form, index) },
@@ -198,7 +180,7 @@ export default class NewChecklistTemplate extends Component<Props, State> {
     )
   }
 
-  addNewItem = (e: SyntheticInputEvent<HTMLInputElement>): void => {
+  addNewItem = e => {
     e.preventDefault()
     this.setState({ form: addNewItem(this.state.form) })
   }
@@ -209,7 +191,7 @@ export default class NewChecklistTemplate extends Component<Props, State> {
     return lastItem !== undefined && lastItem.text === ''
   }
 
-  onSubmit = (e: SyntheticInputEvent<HTMLInputElement>) => {
+  onSubmit = e => {
     e.preventDefault()
     const withEmptyRemoved = removeEmptyItems(this.state.form)
     if (!withEmptyRemoved.name || withEmptyRemoved.items.length === 0) {
@@ -246,7 +228,7 @@ export default class NewChecklistTemplate extends Component<Props, State> {
     }
   }
 
-  renderItem(itemId: string, index: number) {
+  renderItem(itemId, index) {
     const item = this.state.form.items.get(itemId)
     if (!item) return null
     return (

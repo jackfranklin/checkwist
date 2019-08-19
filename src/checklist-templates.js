@@ -1,10 +1,7 @@
-// @flow
-
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { getUserTemplatesMap, removeUserTemplate } from './firebase/templates'
-import type { ChecklistTemplate } from './firebase/templates'
 import Spinner from './spinner'
 
 import {
@@ -14,14 +11,6 @@ import {
   blue,
   stylesForButtonWithColour,
 } from './styles'
-
-type Props = {
-  user: $npm$firebase$auth$User,
-}
-type State = {
-  templates: Map<string, ChecklistTemplate>,
-  isLoading: boolean,
-}
 
 const NewTemplateBtn = styled(Link)`
   display: block;
@@ -92,8 +81,8 @@ const TemplateName = styled.h5`
   font-size: 25px;
 `
 
-export default class ChecklistTemplates extends Component<Props, State> {
-  state: State = {
+export default class ChecklistTemplates extends Component {
+  state = {
     templates: new Map(),
     isLoading: true,
   }
@@ -104,7 +93,7 @@ export default class ChecklistTemplates extends Component<Props, State> {
     })
   }
 
-  deleteTemplate(id: string, e: SyntheticInputEvent<HTMLInputElement>) {
+  deleteTemplate(id, e) {
     if (window.confirm('Are you sure you want to delete this template?')) {
       removeUserTemplate(this.props.user.uid, id).then(() => {
         this.setState(({ templates }) => {
@@ -115,7 +104,7 @@ export default class ChecklistTemplates extends Component<Props, State> {
       })
     }
   }
-  renderTemplate(templateId: string) {
+  renderTemplate(templateId) {
     const template = this.state.templates.get(templateId)
     if (!template) return null
     return (

@@ -1,60 +1,32 @@
-// @flow
-
 import firebase from './config'
 import { getRandomId } from '../get-random-id'
-import type { ChecklistFirebaseInstance } from './instances'
 
-export type TemplateItem = {
-  id: string,
-  text: string,
-}
-
-export type ChecklistTemplate = {
-  items: TemplateItem[],
-  name: string,
-}
-
-type ChecklistTemplateFromFirebase = {
-  [id: string]: ChecklistTemplate,
-}
-export const checklistTemplateItemsToArray = (
-  obj: ChecklistTemplateFromFirebase
-): Array<[string, ChecklistTemplate]> => {
-  const keys: string[] = Object.keys(obj)
+export const checklistTemplateItemsToArray = obj => {
+  const keys = Object.keys(obj)
   return keys.map(key => [key, obj[key]])
 }
 
-const fetchUserTemplates = (
-  userId: string,
-  cb: $npm$firebase$database$DataSnapshot => void
-) =>
+const fetchUserTemplates = (userId, cb) =>
   firebase
     .database()
     .ref(`checklistTemplates/${userId}`)
     .on('value', cb)
 
-export const removeUserTemplate = (userId: string, templateId: string) =>
+export const removeUserTemplate = (userId, templateId) =>
   firebase
     .database()
     .ref(`checklistTemplates/${userId}/${templateId}`)
     .remove()
 
-export const fetchUserTemplate = (
-  userId: string,
-  templateId: string,
-  cb: $npm$firebase$database$DataSnapshot => void
-) =>
+export const fetchUserTemplate = (userId, templateId, cb) =>
   firebase
     .database()
     .ref(`checklistTemplates/${userId}/${templateId}`)
     .once('value', cb)
 
-export const getUserTemplatesMap = (
-  userId: string,
-  cb: (Map<string, ChecklistTemplate>) => void
-): void => {
+export const getUserTemplatesMap = (userId, cb) => {
   fetchUserTemplates(userId, snapshot => {
-    const snapshotValue: { [id: string]: ChecklistTemplate } = snapshot.val()
+    const snapshotValue = snapshot.val()
     if (snapshot.val()) {
       const templates = new Map(checklistTemplateItemsToArray(snapshotValue))
       cb(templates)
@@ -64,11 +36,7 @@ export const getUserTemplatesMap = (
   })
 }
 
-export const writeNewChecklistTemplate = (
-  userId: string,
-  name: string,
-  items: Map<string, TemplateItem>
-) => {
+export const writeNewChecklistTemplate = (userId, name, items) => {
   const id = getRandomId()
   return firebase
     .database()
@@ -79,12 +47,7 @@ export const writeNewChecklistTemplate = (
     })
 }
 
-export const updateChecklistTemplate = (
-  userId: string,
-  templateId: string,
-  name: string,
-  items: Map<string, TemplateItem>
-) => {
+export const updateChecklistTemplate = (userId, templateId, name, items) => {
   return firebase
     .database()
     .ref(`checklistTemplates/${userId}/${templateId}`)
@@ -95,15 +58,15 @@ export const updateChecklistTemplate = (
 }
 
 export const cloneTemplateToInstance = (
-  userId: string,
-  checklistTemplateId: string,
-  newName: string,
-  cb: string => void
+  userId,
+  checklistTemplateId,
+  newName,
+  cb
 ) => {
   fetchUserTemplate(userId, checklistTemplateId, snapshot => {
     const checklist = snapshot.val()
     if (checklist) {
-      const newInstance: ChecklistFirebaseInstance = {
+      const newInstance = {
         instanceId: getRandomId(),
         templateId: checklistTemplateId,
         createdAt: Date.now(),

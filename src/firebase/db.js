@@ -1,19 +1,13 @@
-// @flow
-
 import firebase from './config'
 
-const getUserData = (userId: string) =>
+const getUserData = userId =>
   firebase
     .database()
     .ref(`/users/${userId}`)
     .once('value')
     .then(snapshot => (snapshot ? snapshot.val() : undefined))
 
-export const writeUserDataIfNewUser = (
-  userId: string,
-  displayName: ?string,
-  imageUrl: ?string
-) => {
+export const writeUserDataIfNewUser = (userId, displayName, imageUrl) => {
   return getUserData(userId).then(user => {
     return user
       ? user
@@ -28,20 +22,12 @@ export const writeUserDataIfNewUser = (
   })
 }
 
-type Item = {
-  id: string,
-  text: string,
-}
 const getRandomId = () =>
   Math.random()
     .toString(36)
     .substr(2, 5)
 
-export const writeNewChecklistTemplate = (
-  userId: string,
-  name: string,
-  items: Map<string, Item>
-) => {
+export const writeNewChecklistTemplate = (userId, name, items) => {
   const id = getRandomId()
   return firebase
     .database()

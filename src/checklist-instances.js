@@ -1,5 +1,3 @@
-// @flow
-
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -8,18 +6,9 @@ import {
   checklistInstancesToArray,
   removeUserInstance,
 } from './firebase/instances'
-import type { ChecklistFirebaseInstance } from './firebase/instances'
 import Spinner from './spinner'
 
 import { EmptyList, red, green, stylesForButtonWithColour } from './styles'
-
-type Props = {
-  user: $npm$firebase$auth$User,
-}
-type State = {
-  instances: Map<string, ChecklistFirebaseInstance>,
-  isLoading: boolean,
-}
 
 const InstancesList = styled.ul`
   margin: 0;
@@ -68,8 +57,8 @@ const InstanceName = styled.h5`
   font-size: 25px;
 `
 
-export default class ChecklistInstances extends Component<Props, State> {
-  state: State = {
+export default class ChecklistInstances extends Component {
+  state = {
     instances: new Map(),
     isLoading: true,
   }
@@ -89,7 +78,7 @@ export default class ChecklistInstances extends Component<Props, State> {
     })
   }
 
-  deleteInstance(id: string, e: SyntheticInputEvent<HTMLInputElement>) {
+  deleteInstance(id, e) {
     if (window.confirm('Are you sure you want to delete this checklist?')) {
       removeUserInstance(this.props.user.uid, id).then(() => {
         this.setState(({ instances }) => {
@@ -101,7 +90,7 @@ export default class ChecklistInstances extends Component<Props, State> {
     }
   }
 
-  renderInstance(instanceId: string) {
+  renderInstance(instanceId) {
     const instance = this.state.instances.get(instanceId)
     if (!instance) return null
     return (

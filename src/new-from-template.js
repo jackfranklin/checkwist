@@ -1,20 +1,9 @@
-// @flow
 import React, { Component } from 'react'
 
 import { Redirect } from 'react-router-dom'
 import { cloneTemplateToInstance } from './firebase/templates'
 import styled from 'styled-components'
 import { SubmitButton } from './styles'
-
-type Props = {
-  user: $npm$firebase$auth$User,
-  checklistId: string,
-}
-
-type State = {
-  instanceId?: string,
-  newName: string,
-}
 
 const Form = styled.form`
   width: 100%;
@@ -44,12 +33,12 @@ const FormSubmitBtn = SubmitButton.extend`
   margin-left: auto;
 `
 
-class NewFromTemplate extends Component<Props, State> {
-  state: State = {
+class NewFromTemplate extends Component {
+  state = {
     newName: '',
   }
 
-  createInstance = (e: SyntheticInputEvent<HTMLInputElement>) => {
+  createInstance = e => {
     e.preventDefault()
     cloneTemplateToInstance(
       this.props.user.uid,
@@ -59,7 +48,7 @@ class NewFromTemplate extends Component<Props, State> {
     )
   }
 
-  updateName = (e: SyntheticInputEvent<HTMLInputElement>) => {
+  updateName = e => {
     this.setState({ newName: e.target.value })
   }
 

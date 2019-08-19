@@ -15,8 +15,7 @@
         ]
       }
     ],
-    "react",
-    "flow"
+    "react"
   ],
   "plugins": [
     "transform-object-rest-spread",

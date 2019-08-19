@@ -1,78 +1,50 @@
-// @flow
 import { getRandomId } from './get-random-id'
-import type { TemplateItem } from './firebase/templates'
 
-export type ChecklistTemplateForm = {
-  name: string,
-  items: Map<string, TemplateItem>,
-}
-
-export const newChecklist = (): ChecklistTemplateForm => ({
+export const newChecklist = () => ({
   name: '',
   items: new Map(),
 })
 
-type ItemManipulator = (Map<string, TemplateItem>) => void
-
-const cloneAndManipulateItems = (
-  form: ChecklistTemplateForm,
-  newItemsManipulator: ItemManipulator
-): ChecklistTemplateForm => {
+const cloneAndManipulateItems = (form, newItemsManipulator) => {
   const newItems = new Map(form.items)
   newItemsManipulator(newItems)
   return { items: newItems, name: form.name }
 }
 
-export const updateItemText = (
-  form: ChecklistTemplateForm,
-  itemId: string,
-  itemValue: string
-): ChecklistTemplateForm => {
+export const updateItemText = (form, itemId, itemValue: string) => {
   return cloneAndManipulateItems(form, newItems => {
     newItems.set(itemId, { id: itemId, text: itemValue })
   })
 }
 
-export const removeItem = (
-  form: ChecklistTemplateForm,
-  itemId: string
-): ChecklistTemplateForm => {
+export const removeItem = (form, itemId) => {
   return cloneAndManipulateItems(form, newItems => {
     newItems.delete(itemId)
   })
 }
 
-const makeNewItem = (): TemplateItem => ({
+const makeNewItem = () => ({
   id: getRandomId(),
   text: '',
 })
 
-const formItemsAsArray = (
-  items: Map<string, TemplateItem>
-): Array<[string, TemplateItem]> => [...items.entries()]
+const formItemsAsArray = items => [...items.entries()]
 
-export const addNewItemBelowIndex = (
-  form: ChecklistTemplateForm,
-  itemIndex: number
-): ChecklistTemplateForm => {
+export const addNewItemBelowIndex = (form, itemIndex) => {
   const itemsArray = formItemsAsArray(form.items)
   const newItem = makeNewItem()
   itemsArray.splice(itemIndex + 1, 0, [newItem.id, newItem])
   return { items: new Map(itemsArray), name: form.name }
 }
 
-export const addNewItem = (
-  form: ChecklistTemplateForm
-): ChecklistTemplateForm => {
+export const addNewItem = form => {
   const newItem = makeNewItem()
   return cloneAndManipulateItems(form, newItems => {
     newItems.set(newItem.id, newItem)
   })
 }
 
-export const removeEmptyItems = (
-  form: ChecklistTemplateForm
-): ChecklistTemplateForm => {
+export const removeEmptyItems = form => {
   const itemsArray = formItemsAsArray(form.items)
   const filteredItems = itemsArray.filter(([itemId, { text }]) => text !== '')
 

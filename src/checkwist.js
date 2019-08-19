@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'react'
 import { getAuthState } from './firebase/auth'
 import { writeUserDataIfNewUser } from './firebase/db'
@@ -13,9 +12,6 @@ import ChecklistInstanceForm from './checklist-instance-form'
 import { Container, yellow, blue } from './styles'
 import styled from 'styled-components'
 import ChecklistInstances from './checklist-instances'
-
-type Props = {}
-type State = { user: ?$npm$firebase$auth$User, isLoading: boolean }
 
 injectGlobal`
   ${normaliseCss}
@@ -50,9 +46,7 @@ const ChecklistDivider = styled.h3`
   font-size: 35px;
 `
 
-type UserRouteProps = { user: $npm$firebase$auth$User }
-
-const UserRoutes = ({ user }: UserRouteProps) => (
+const UserRoutes = ({ user }) => (
   <Switch>
     <Route
       path="/"
@@ -75,7 +69,7 @@ const UserRoutes = ({ user }: UserRouteProps) => (
     <Route
       path="/new-from-template/:templateId"
       render={routeProps => {
-        const templateId: string =
+        const templateId =
           (routeProps.match.params && routeProps.match.params.templateId) || ''
 
         if (templateId === '') return <Redirect to="/" />
@@ -91,7 +85,7 @@ const UserRoutes = ({ user }: UserRouteProps) => (
     <Route
       path="/templates/:templateId"
       render={routeProps => {
-        const templateId: string =
+        const templateId =
           (routeProps.match.params && routeProps.match.params.templateId) || ''
 
         if (templateId === '') return <Redirect to="/" />
@@ -108,7 +102,7 @@ const UserRoutes = ({ user }: UserRouteProps) => (
     <Route
       path="/instances/:instanceId"
       render={routeProps => {
-        const instanceId: string =
+        const instanceId =
           (routeProps.match.params && routeProps.match.params.instanceId) || ''
 
         if (instanceId === '') return <Redirect to="/" />
@@ -143,7 +137,7 @@ const LoggedOutHero = styled.div`
   }
 `
 
-class Checkwist extends Component<Props, State> {
+class Checkwist extends Component {
   state = {
     user: undefined,
     isLoading: true,
