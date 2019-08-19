@@ -1,5 +1,3 @@
-import { Provider } from 'react-redux'
-import store from './store'
 import React from 'react'
 import { render } from 'react-dom'
 import Checkwist from './checkwist'
@@ -13,11 +11,7 @@ if (!firebase.apps.length) {
   firebase.initializeApp(config)
 }
 
-const App = () => (
-  <Provider store={store}>
-    <Checkwist />
-  </Provider>
-)
+const App = () => <Checkwist />
 
 const elem = document.getElementById('react-root')
 if (elem) {

@@ -55,10 +55,6 @@ module.exports = {
   ].filter(Boolean),
   resolve: {
     mainFields: ['module', 'browser', 'main'],
-    alias: {
-      react: 'preact-compat',
-      'react-dom': 'preact-compat',
-    },
   },
   module: {
     rules: [
