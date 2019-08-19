@@ -28,7 +28,7 @@ const FormGroup = styled.div`
   display: flex;
   align-items: center;
 `
-const FormSubmitBtn = SubmitButton.extend`
+const FormSubmitBtn = styled(SubmitButton)`
   width: 30%;
   margin-left: auto;
 `

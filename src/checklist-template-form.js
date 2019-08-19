@@ -24,7 +24,7 @@ const FormGroup = styled.div`
   position: relative;
 `
 
-const FormNameGroup = FormGroup.extend`
+const FormNameGroup = styled(FormGroup)`
   display: flex;
   align-items: center;
   padding: 10px;
@@ -67,7 +67,7 @@ const FormItem = styled.li`
   }
 `
 
-const FormItemInput = FormTextInput.extend`
+const FormItemInput = styled(FormTextInput)`
   width: 70%;
 `
 

@@ -10,10 +10,10 @@ import ChecklistTemplateForm from './checklist-template-form'
 import NewFromTemplate from './new-from-template'
 import ChecklistInstanceForm from './checklist-instance-form'
 import { Container, yellow, blue } from './styles'
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import ChecklistInstances from './checklist-instances'
 
-injectGlobal`
+const GlobalStyles = createGlobalStyle`
   ${normaliseCss}
   * { font-family: 'Slabo 27px', serif; box-sizing: border-box; }
   button {
@@ -156,6 +156,7 @@ class Checkwist extends Component {
     const { user, isLoading } = this.state
     return (
       <BrowserRouter>
+        <GlobalStyles />
         <Container>
           <Header user={user} />
           {user ? (

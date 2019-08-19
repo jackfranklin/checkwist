@@ -68,11 +68,11 @@ const DeleteTemplateBtn = styled.button`
   ${stylesForButtonWithColour(red)};
 `
 
-const EditTemplateLink = TemplateLink.extend`
+const EditTemplateLink = styled(TemplateLink)`
   ${stylesForButtonWithColour(blue)};
 `
 
-const UseTemplateLink = TemplateLink.extend`
+const UseTemplateLink = styled(TemplateLink)`
   ${stylesForButtonWithColour(green)};
 `
 
